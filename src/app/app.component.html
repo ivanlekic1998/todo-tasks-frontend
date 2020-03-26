@@ -1,0 +1,55 @@
+<div id="headContainer">
+  <h1 id="logo">todos</h1>
+  <div id="wrapper">
+    <form (ngSubmit)="addItem()">
+      <label (click)="markCompleted()">All</label>
+      <div id="inputElement">
+        <input
+          type="text"
+          id="addTask"
+          name="itemName"
+          [(ngModel)]="newTaskItem.name"
+        />
+      </div>
+    </form>
+    <ul id="headPart">
+      <li *ngFor="let task of taskItems$ | async">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            (click)="markCompleted(task.id)"
+            [checked]="!task.status"
+          />
+        </label>
+        <span style="text-align: left; width: 100%; padding-left: 20px;">{{
+          task.name
+        }}</span>
+        <button (click)="deleteItem(task.id)">X</button>
+      </li>
+    </ul>
+    <ul id="footer">
+      <li
+        class="nav"
+        (click)="filterItems()"
+        [ngClass]="{ active: selectedFilter == 'all' }"
+      >
+        all
+      </li>
+      <li
+        class="nav"
+        (click)="filterItems(true, 'active')"
+        [ngClass]="{ active: selectedFilter == 'active' }"
+      >
+        active
+      </li>
+      <li
+        class="nav"
+        (click)="filterItems(false, 'completed')"
+        [ngClass]="{ active: selectedFilter == 'completed' }"
+      >
+        completed
+      </li>
+      <li (click)="deleteItem()">Clear completed</li>
+    </ul>
+  </div>
+</div>
